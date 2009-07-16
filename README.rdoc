@@ -1,6 +1,14 @@
-= rtomcat
+= rnexus
 
-Description goes here.
+A ruby wrapper to perform various admin actions against a tomcat installation
+
+== Synopsis
+
+  coming soon...really soon
+
+== Install
+
+  sudo gem install rtomcat
 
 == Copyright
 
