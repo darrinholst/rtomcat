@@ -12,7 +12,7 @@ class Tomcat::Manager
   end
   
   def deploy(appname, file)
-    check_response(resource('deploy', appname).put file)
+    check_response(resource('deploy', appname).put(file))
   end
   
   private
