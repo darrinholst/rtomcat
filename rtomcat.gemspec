@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/manager.rb",
      "lib/rtomcat.rb",
+     "rtomcat.gemspec",
      "test/manager_test.rb",
      "test/test_helper.rb"
   ]
@@ -40,8 +41,11 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<rest-client>, [">= 1.0.3"])
     else
+      s.add_dependency(%q<rest-client>, [">= 1.0.3"])
     end
   else
+    s.add_dependency(%q<rest-client>, [">= 1.0.3"])
   end
 end
