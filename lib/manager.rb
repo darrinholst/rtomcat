@@ -8,19 +8,21 @@ class Tomcat::Manager
   end
   
   def undeploy(appname)
-    resp = resource('undeploy', appname).get
-    match = resp.match(/(.*) - .*/)    
-    raise(resp) unless match && match[1].eql?("OK")
+    check_response(resource('undeploy', appname).get)
   end
   
   def deploy(appname, file)
-    resp = resource('deploy', appname).put file
-    match = resp.match(/(.*) - .*/)    
-    raise(resp) unless match && match[1].eql?("OK")
+    check_response(resource('deploy', appname).put file)
   end
   
   private
   
+  def check_response(response)
+    match = response.match(/(.*) - .*/)    
+    raise("http status code: #{response.code}, message: #{response}") unless match && match[1].eql?("OK")
+    response
+  end
+
   def resource(function, appname)
     RestClient::Resource.new("#{@url}/#{function}?path=/#{appname}", :user => @username, :password => @password)
   end

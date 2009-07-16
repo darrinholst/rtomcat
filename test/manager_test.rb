@@ -17,7 +17,7 @@ class ManagerTest < Test::Unit::TestCase
   
   def test_undeploy_when_non_ok_response
     FakeWeb.register_uri(:get, undeploy_url, :body => "FAIL - some error")
-    assert_raises_with("FAIL - some error") { undeploy }
+    assert_raises_with("http status code: 200, message: FAIL - some error") { undeploy }
   end
   
   def test_deploy
@@ -32,7 +32,7 @@ class ManagerTest < Test::Unit::TestCase
   
   def test_deploy_when_non_ok_response
     FakeWeb.register_uri(:put, deploy_url, :body => "FAIL - some error")
-    assert_raises_with("FAIL - some error") { deploy }
+    assert_raises_with("http status code: 200, message: FAIL - some error") { deploy }
   end
   
   private 
