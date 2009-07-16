@@ -15,6 +15,15 @@ class Tomcat::Manager
     check_response(resource('deploy', appname).put(file))
   end
   
+  def redeploy(appname, file)
+    begin
+      undeploy(appname)
+    rescue
+    end
+    
+    deploy(appname, file)
+  end
+  
   private
   
   def check_response(response)

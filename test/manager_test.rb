@@ -21,7 +21,7 @@ class ManagerTest < Test::Unit::TestCase
   end
   
   def test_deploy
-    FakeWeb.register_uri(:put, deploy_url, :body => "OK - Undeployed application at context path /appname")
+    FakeWeb.register_uri(:put, deploy_url, :body => "OK - Deployed application at context path /appname")
     assert_nothing_raised { deploy }
   end
   
@@ -33,6 +33,18 @@ class ManagerTest < Test::Unit::TestCase
   def test_deploy_when_non_ok_response
     FakeWeb.register_uri(:put, deploy_url, :body => "FAIL - some error")
     assert_raises_with("http status code: 200, message: FAIL - some error") { deploy }
+  end
+  
+  def test_redeploy
+    FakeWeb.register_uri(:get, undeploy_url, :body => "OK - Undeployed application at context path /appname")
+    FakeWeb.register_uri(:put, deploy_url, :body => "OK - Deployed application at context path /appname")
+    assert_nothing_raised { redeploy }
+  end
+  
+  def test_redeploy_ignores_undeploy_errors
+    FakeWeb.register_uri(:get, undeploy_url, :body => "FAIL - some error")
+    FakeWeb.register_uri(:put, deploy_url, :body => "OK - Deployed application at context path /appname")
+    assert_nothing_raised { redeploy }
   end
   
   private 
@@ -51,6 +63,10 @@ class ManagerTest < Test::Unit::TestCase
   
   def deploy
     @manager.deploy('appname', "FakeWeb doesn't allow for put body interrogation right now, so this parameter doesn't matter")    
+  end
+  
+  def redeploy
+    @manager.redeploy('appname', "Some bogus file content")
   end
   
   def assert_raises_with(message)
