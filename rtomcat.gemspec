@@ -32,7 +32,6 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/darrinholst/rtomcat}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{rtomcat}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{ruby wrapper around the tomcat manager}
   s.test_files = [
